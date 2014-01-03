@@ -98,13 +98,20 @@ function ps_plugin_setting_page(){
 						</tr>
 						<?php } ?>
 					</table>
+					<p style="float: right;"><a class="btn btn-danger" href="setting.php?section=PersonnalSettings&reset=true">Reset</a>
+					</p>
 </div>
 
 				<?php 
 
-					if (isset($_GET['save'])){ // On les données envoyées
+					if (isset($_GET['save'])){ // On récupère les données envoyées
 					  if ($_GET['save']=="true"){
 						edit_constant();
+						}
+					}
+					if (isset($_GET['reset'])){ // On récupère les données envoyées
+					  if ($_GET['reset']=="true"){
+						reset_constant();
 						}
 					}
 					
@@ -185,6 +192,31 @@ function edit_constant(){
 			fputs($handle, $constant); // On écrit le nouveau nombre de pages vues
 			fclose($handle);
 		}
+		else {
+			?>
+			<div id="main" class="wrapper clearfix">
+				<article>
+					<h3>Vous devez être connecté</h3>
+				</article>
+			</div>
+			<?php
+		}
+	}
+}
+
+//Reset des paramètres par défaut
+function reset_constant(){
+		global $_,$myUser;
+
+		//Erreur dans les droits sinon!
+		$myUser->loadRight();	
+		
+	if(isset($_['section']) && $_['section']=='PersonnalSettings' ){
+		if($myUser!=false){
+			
+			include 'install.php';
+			
+			}
 		else {
 			?>
 			<div id="main" class="wrapper clearfix">
