@@ -217,6 +217,22 @@ function reset_constant(){
 			include 'uninstall.php';
 			include 'install.php';
 			
+			$psManager = new PersonnalSettings();
+			$sets = $psManager->populate();
+			$body = "";
+			
+			foreach($sets as $ps){
+				$body = $body."define('".$ps->getName()."','".$ps->getDescription()."');";
+			}
+			$handle = fopen("../yana-server/constant.php", "r+");
+			$header = "<?php ";
+			$footer = " ?>";
+			$constant = $header.$body.$footer;
+			ftruncate($handle,0);// on vide le fichier
+			fseek($handle, 0); // On remet le curseur au début du fichier
+			fputs($handle, $constant); // On écrit le nouveau nombre de pages vues
+			fclose($handle);
+			
 			}
 		else {
 			?>
