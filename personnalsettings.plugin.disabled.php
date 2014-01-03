@@ -214,6 +214,7 @@ function reset_constant(){
 	if(isset($_['section']) && $_['section']=='PersonnalSettings' ){
 		if($myUser!=false){
 			
+			include 'uninstall.php';
 			include 'install.php';
 			
 			}
